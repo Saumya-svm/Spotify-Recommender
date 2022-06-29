@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Design by foolishdeveloper.com -->
+        <title>Register</title>
+        
+        <link rel="stylesheet" type="text/css" href="../static/main2.css">
+        
+        <!--Stylesheet-->
+        
+    </head>
+    <body style="background-color:aliceblue">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    {% for id in ids %}
+    <h1>{{link}}</h1>
+        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/{{id}}" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+    {% endfor %}
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <form method="POST" action="" class="search">
+        <h3 style="color:1DB954;">Add Tracks</h3>
+        {{ form.hidden_tag() }}
+        <fieldset >
+            <div>
+                {{ form.search.label(class="form-control-label") }}
+
+                {% if form.search.errors %}
+                    {{ form.search() }}
+                    <div>
+                        {% for error in form.search.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.search() }}
+                {% endif %}
+            </div>
+            <div>
+                <input type="checkbox" name="match" value="playlist1" checked>playlist 1
+            </div>
+            </fieldset>
+        <button>
+            Search
+        </button>
+    </form>
+    {% for tracklink, id, name, artist in tracks %}
+    <div class="search_results">
+        <a href="https://open.spotify.com/track/{{ id }}"+ target="blank">{{ name }}</a>
+        <p>{{ artist }}</p>
+        {% for name, playlist_id in zip %}
+        <p><a href="{{ url_for('add', playlist_id=playlist_id, track_add=id) }}">Add in {{ name }}</a></p>
+        {% endfor %}
+    </div>
+    {% endfor %}
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
